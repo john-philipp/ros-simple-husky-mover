@@ -221,7 +221,7 @@ def calculate_twist(context):
         theta_actual += math.pi
         theta_target += math.pi
 
-        # Closest might be target + pi.
+        # Closest might be target + 2 * pi.
         theta_target_2 = theta_target + 2 * math.pi
         if abs(theta_actual - theta_target_2) < abs(theta_actual - theta_target):
             theta_target = theta_target_2
