@@ -26,6 +26,14 @@ Run as follows:
 ./husky_mover.py -- 6 7
 ./husky_mover.py -- -1 -1
 # ...
+
+# Alternatively:
+while :; do
+ x=$(($RANDOM % 20 - 10))
+ y=$(($RANDOM % 20 - 10))
+ cmd="./husky_mover.py -- ${x} ${y}"
+ ${cmd}
+done
 ```
 
 ## Strategy
