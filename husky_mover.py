@@ -65,6 +65,9 @@ class Context:
         # Latest odometry from topic subscriber.
         self.latest_odometry = None
 
+        # Latest distance to target calculated.
+        self.distance_to_target = 1
+
         # Keep track of updates somewhat.
         # After waiting for positional change
         # we want an explicit way to tell that
@@ -165,7 +168,6 @@ def calculate_twist(context):
     # These variables control our resulting movement.
     # move_forward moves our husky.
     # turn indicates which direction to turn in (r/s).
-
     move_forward = config.move_forward_speed
     turn = 0
 
@@ -188,6 +190,7 @@ def calculate_twist(context):
 
     # Have we arrived? If so, echo and quit.
     distance = math.sqrt(dx * dx + dy * dy)
+    context.distance_to_target = distance
     if distance < config.target_position_err:
         Helpers.shutdown(f"I've arrived. Distance to target: {distance:.4f}")
 
@@ -282,7 +285,13 @@ if __name__ == "__main__":
                 context.twist_publisher.publish(twist)
             
             # Want to ensure updates during debugging.
-            rospy.sleep(config.dt)
+            # We're linking update rate to distance.
+            # Publish rate is adapted as we move closer.
+            if context.distance_to_target > 2 * config.target_position_err:
+                rospy.sleep(config.dt / context.distance_to_target)
+            else:
+                rospy.sleep(config.dt)
+
             context.updated = False
             while not context.updated:
                 rospy.sleep(config.dt_new_update)
