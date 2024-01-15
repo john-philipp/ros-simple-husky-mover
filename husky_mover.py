@@ -6,30 +6,6 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist
 from docopt import docopt
 
-"""
-Instructions:
- - pip3 install docopt
- - In separate command line windows:
-   - roscore
-   - roslaunch husky_gazebo empty_world.launch
- - Then run as:
-    ./husky_mover.py <target_x> <target_y>
- - May be invoked repeatedly to chain navigation.
-
-Strategy:
- 1 Where am I?
- 2 Where is the target relative to me?
- 3 What's the distance to the target?
- 4 Am I within the specified vicinity?
-    -> Yes: Shutdown. I'm done.
- 5 Calculate angle from current location to target in radians using arctan().
- 6 Transform orientation data to get current husky orientation angle in radians.
- 7 Current orientation in acceptable margin when compared to target angle?
-    -> Yes: Just move forward.
-    -> No: Turn (direction depends on relative angle).
- 8 Back to 1.
-"""
-
 
 class Position:
     """Position abstraction."""
@@ -271,9 +247,8 @@ def calculate_twist(context):
 if __name__ == "__main__":
 
     args = docopt(
-        """Usage: husky_mover.py [-h] <target_x> <target_y>
+        """Usage: husky_mover.py -- <target_x> <target_y>
 
-        -h --help       Show this.
         <target_x>      Specify target x coordinate.
         <target_y>      Specify target y coordinate.
 
