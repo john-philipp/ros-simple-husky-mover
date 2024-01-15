@@ -9,7 +9,7 @@ Tested with ROS noetic (ROS1).
 ## Preliminaries
 In separate command line windows:
 ```
-roscore									  # Requires ROS1 (tested with noetic).
+roscore                                   # Requires ROS1 (tested with noetic).
 roslaunch husky_gazebo empty_world.launch # Requires husky gazebo demo.
 ```
 
