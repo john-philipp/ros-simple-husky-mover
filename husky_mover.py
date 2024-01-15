@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import rospy, tf
 import math
 from nav_msgs.msg import Odometry
@@ -214,10 +213,10 @@ def calculate_twist(context):
         theta_err = min(config.theta_dampen_by_distance_factor * distance, config.theta_max_err)
 
         # I want to handle boundary conditions.
-        # E.g. theta actual close to 0 and 2pi.
+        # E.g. theta actual close to 0 and 2 * pi.
         # And pick theta_target closest to theta_actual.
 
-        # Convert to [0, 2*pi].
+        # Convert to [0, 2 * pi].
         theta_actual += math.pi
         theta_target += math.pi
 
