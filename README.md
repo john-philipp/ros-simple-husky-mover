@@ -1,4 +1,7 @@
 # ros-simple-husky-mover
+
+![demo](husky_gazebo_demo.gif)
+
 Specify destination for husky to move to. It should then go there.
 
 Tested with ROS noetic (ROS1).
